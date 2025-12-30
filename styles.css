@@ -1,0 +1,401 @@
+:root {
+  --bg: #16832eff;
+  --fg: #e9eefc;
+  --muted: rgba(233, 238, 252, 0.72);
+  --glass: rgba(11, 42, 22, 0.45);
+  --glass2: rgba(11, 42, 22, 0.25);
+  --stroke: rgba(233, 238, 252, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--fg);
+  overflow: hidden;
+}
+
+.bg-grid {
+  --tile: 140px;
+  position: fixed;
+  inset: 0;
+  display: grid;
+  align-content: start;
+  justify-content: start;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.bg-cell {
+  width: var(--tile);
+  height: var(--tile);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0;
+  will-change: opacity;
+  transition: opacity 750ms ease;
+}
+
+.bg-cell:hover,
+.bg-cell.active {
+  opacity: 1;
+}
+
+.header {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.header__inner {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 18px 18px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, var(--glass), var(--glass2));
+  border: 1px solid var(--stroke);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  pointer-events: none;
+  text-align: center;
+  max-height: 92vh;
+  overflow: auto;
+}
+
+.header__inner a,
+.header__inner button,
+.header__inner .carousel {
+  pointer-events: auto;
+}
+
+.header__title {
+  font-family: "Bitcount Grid Double", system-ui, sans-serif;
+  letter-spacing: 0.02em;
+  font-size: clamp(38px, 6vw, 72px);
+  line-height: 1;
+  text-transform: lowercase;
+}
+
+.header__meta {
+  margin-top: 10px;
+  font-family: "Press Start 2P", system-ui, sans-serif;
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__links {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  font-family: "VT323", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 22px;
+  color: rgba(233, 238, 252, 0.86);
+}
+
+.header__albums {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  font-family: "VT323", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 22px;
+  color: rgba(233, 238, 252, 0.86);
+}
+
+.album-cover {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: inline-flex;
+  border: 1px solid rgba(233, 238, 252, 0.18);
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.album-cover__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.chip-link {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  padding: 3px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(233, 238, 252, 0.18);
+  background: rgba(0, 0, 0, 0.22);
+  color: rgba(233, 238, 252, 0.92);
+  text-decoration: none;
+  line-height: 1.1;
+}
+
+.header__photos {
+  margin-top: 14px;
+}
+
+.header__photosTop {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  font-family: "VT323", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 22px;
+  color: rgba(233, 238, 252, 0.86);
+}
+
+.header__photosControls {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.carousel {
+  margin-top: 10px;
+  width: min(760px, 78vw);
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 14px;
+  border: 1px solid rgba(233, 238, 252, 0.14);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.carousel.is-hidden {
+  display: none;
+}
+
+.carousel::-webkit-scrollbar {
+  height: 0;
+}
+
+.carousel__track {
+  display: flex;
+}
+
+.slide {
+  margin: 0;
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  padding: 12px;
+}
+
+.slide__frame {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.slide__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.slide__cap {
+  margin-top: 10px;
+  font-family: "Press Start 2P", system-ui, sans-serif;
+  font-size: 10px;
+  color: rgba(233, 238, 252, 0.75);
+}
+
+.chip-link:hover {
+  border-color: rgba(233, 238, 252, 0.36);
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.chip-link__k {
+  opacity: 0.7;
+}
+
+.chip-link__v {
+  opacity: 1;
+}
+
+.chip-btn {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  padding: 3px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(233, 238, 252, 0.18);
+  background: rgba(0, 0, 0, 0.22);
+  color: rgba(233, 238, 252, 0.92);
+  font-family: "VT323", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 22px;
+  line-height: 1.1;
+  cursor: pointer;
+}
+
+.chip-btn:hover {
+  border-color: rgba(233, 238, 252, 0.36);
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.chip-btn:active {
+  transform: translateY(1px);
+}
+
+.header__interests {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  font-family: "VT323", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 22px;
+  color: rgba(233, 238, 252, 0.86);
+}
+
+.header__label {
+  opacity: 0.7;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(233, 238, 252, 0.18);
+  background: rgba(0, 0, 0, 0.22);
+  color: rgba(233, 238, 252, 0.92);
+  line-height: 1.1;
+}
+
+.header__link {
+  color: var(--fg);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(233, 238, 252, 0.3);
+}
+
+.header__link:hover {
+  border-bottom-color: rgba(233, 238, 252, 0.7);
+}
+
+.header__sep {
+  opacity: 0.5;
+}
+
+.header__ageValue {
+  color: var(--fg);
+}
+
+@media (max-width: 520px) {
+  .header {
+    padding: 0;
+  }
+
+  .header__inner {
+    padding: 14px 14px;
+  }
+
+  .chip-btn {
+    font-size: 20px;
+  }
+
+  .header__meta {
+    font-size: 10px;
+    gap: 6px;
+  }
+
+  .header__links {
+    font-size: 20px;
+    gap: 6px;
+  }
+
+  .header__albums {
+    font-size: 20px;
+    gap: 6px;
+  }
+
+  .album-cover {
+    width: 48px;
+    height: 48px;
+  }
+
+  .header__interests {
+    font-size: 20px;
+    gap: 6px;
+  }
+
+  .carousel {
+    width: min(760px, 88vw);
+  }
+}
+
+/* Comments area styling to match hero glass look */
+.comments {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  padding: 28px 12px;
+}
+
+.comments__inner {
+  width: min(920px, 96vw);
+  border-radius: 12px;
+  background: linear-gradient(180deg, var(--glass), rgba(11,42,22,0.15));
+  border: 1px solid var(--stroke);
+  padding: 18px;
+  color: var(--fg);
+  font-family: "VT323", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.comments__title {
+  font-family: "Bitcount Grid Double", system-ui, sans-serif;
+  font-size: 20px;
+  margin: 0 0 8px 0;
+  text-transform: lowercase;
+}
+
+.cusdis-wrap {
+  background: transparent;
+}

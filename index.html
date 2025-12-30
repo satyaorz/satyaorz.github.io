@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>satya</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Double&family=Press+Start+2P&family=VT323&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="bg-grid" class="bg-grid" aria-hidden="true"></div>
+
+    <header class="header" role="banner">
+      <div class="header__inner">
+        <div class="header__title">satya</div>
+
+        <div class="header__meta">
+          <span class="header__age">
+            age:
+            <span id="age" class="header__ageValue" aria-label="age counter">--</span>
+          </span>
+        </div>
+
+        <div class="header__links" aria-label="links">
+          <span class="header__label">links:</span>
+          <a class="chip-link" href="https://x.com/satyaorz" target="_blank" rel="noreferrer">
+            <span class="chip-link__k">x:</span>
+            <span class="chip-link__v">satyaorz</span>
+          </a>
+          <a class="chip-link" href="https://github.com/satyaorz" target="_blank" rel="noreferrer">
+            <span class="chip-link__k">github:</span>
+            <span class="chip-link__v">satyaorz</span>
+          </a>
+        </div>
+
+        <div class="header__albums" aria-label="recommended album">
+          <span class="header__label">recommended album:</span>
+          <a
+            class="album-cover"
+            href="https://open.spotify.com/album/7uUltiwqvVn8Uy23Hdf1kE"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="recommended album cover"
+          >
+            <img
+              class="album-cover__img"
+              src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02dab52ffae2ea2a9e61477837"
+              alt="Disintegration (album cover)"
+              loading="lazy"
+              decoding="async"
+            />
+          </a>
+          <a
+            class="chip-link"
+            href="https://music.youtube.com/playlist?list=OLAK5uy_nbn7SLPdZCFaoCKwGTYOqEOdYQF5HIdiY&si=7BR2sC9xXYlnXCTn"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span class="chip-link__k">ytmusic:</span>
+            <span class="chip-link__v">open</span>
+          </a>
+          <a
+            class="chip-link"
+            href="https://open.spotify.com/album/7uUltiwqvVn8Uy23Hdf1kE"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span class="chip-link__k">spotify:</span>
+            <span class="chip-link__v">open</span>
+          </a>
+        </div>
+
+        <div class="header__interests" aria-label="interests">
+          <span class="header__label">interests:</span>
+          <span class="tag">music</span>
+          <span class="tag">cars/hotwheels</span>
+          <span class="tag">cs/coding</span>
+          <span class="tag">photography</span>
+        </div>
+
+        <div class="header__photos" aria-label="some photos i have taken">
+          <div class="header__photosTop">
+            <span class="header__label">some photos i have taken:</span>
+            <div class="header__photosControls">
+                <button class="chip-btn" type="button" id="photo-toggle" aria-label="hide photos">hide</button>
+              <button class="chip-btn" type="button" id="photo-prev" aria-label="previous photo">prev</button>
+              <button class="chip-btn" type="button" id="photo-next" aria-label="next photo">next</button>
+            </div>
+          </div>
+
+          <div class="carousel" id="photo-carousel" aria-label="photo carousel">
+            <div class="carousel__track" id="photo-track"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <script>
+      (() => {
+        const ageEl = document.getElementById('age');
+        const BIRTH = new Date(Date.UTC(2005, 8, 22, 0, 0, 0));
+
+        function pad2(n) {
+          return String(n).padStart(2, '0');
+        }
+
+        function updateAge() {
+          const now = new Date();
+          const nowUtc = new Date(
+            Date.UTC(
+              now.getUTCFullYear(),
+              now.getUTCMonth(),
+              now.getUTCDate(),
+              now.getUTCHours(),
+              now.getUTCMinutes(),
+              now.getUTCSeconds(),
+              now.getUTCMilliseconds(),
+            ),
+          );
+
+          let years = nowUtc.getUTCFullYear() - BIRTH.getUTCFullYear();
+          const hadBirthdayThisYear =
+            nowUtc.getUTCMonth() > BIRTH.getUTCMonth() ||
+            (nowUtc.getUTCMonth() === BIRTH.getUTCMonth() && nowUtc.getUTCDate() >= BIRTH.getUTCDate());
+
+          if (!hadBirthdayThisYear) years -= 1;
+
+          const lastBirthday = new Date(BIRTH);
+          lastBirthday.setUTCFullYear(BIRTH.getUTCFullYear() + years);
+
+          let diffMs = nowUtc.getTime() - lastBirthday.getTime();
+          if (diffMs < 0) diffMs = 0;
+
+          const sec = Math.floor(diffMs / 1000);
+          const days = Math.floor(sec / 86400);
+          const hours = Math.floor((sec % 86400) / 3600);
+          const minutes = Math.floor((sec % 3600) / 60);
+          const seconds = sec % 60;
+
+          ageEl.textContent = `${years}y ${days}d ${pad2(hours)}:${pad2(minutes)}:${pad2(seconds)} (utc)`;
+        }
+
+        setInterval(updateAge, 250);
+        updateAge();
+      })();
+    </script>
+
+    <script>
+      (() => {
+        const TARGET_TILE = 140;
+        const GIF_URLS = [
+          'https://media1.tenor.com/m/NzrqQHFBVz8AAAAC/kitty-transparent.gif',
+          'https://media.tenor.com/kQA86PqyXZQAAAAi/small-dancing-white-cat-dance-funny.gif',
+          'https://media.tenor.com/lehLZcrTyM0AAAAi/balls-106.gif',
+          'https://media.tenor.com/JPOhHuokpdYAAAAi/pop-cat.gif',
+          'https://media1.tenor.com/m/aSkdq3IU0g0AAAAC/laughing-cat.gif',
+          'https://media.tenor.com/SrK6CJp13hQAAAAi/gg.gif',
+          'https://media.tenor.com/e-lc0QtNZ3sAAAAi/nintendo-mario.gif',
+          'https://media.tenor.com/9d-R9Nu4m2oAAAAi/skirrrt.gif',
+          'https://media.tenor.com/9k3P0pTcAGMAAAAi/lightning-mcqueen-srb2kart.gif',
+          'https://media.tenor.com/ynS74bXp6fYAAAAi/te-amo.gif',
+          'https://media.tenor.com/FXZt_Ae_W0QAAAAi/andresbc88.gif',
+          'https://media1.tenor.com/m/4p5lLhgetLgAAAAd/cat-tongue.gif',
+          'https://media1.tenor.com/m/bnztdKRJF9QAAAAC/cat-chat-cat-fall.gif',
+        ];
+        const gridEl = document.getElementById('bg-grid');
+
+        let cols = 1;
+        let rows = 1;
+        let tile = TARGET_TILE;
+        const timeouts = new WeakMap();
+
+        function activateCell(cell) {
+          if (!cell) return;
+          cell.classList.add('active');
+
+          const prev = timeouts.get(cell);
+          if (prev) clearTimeout(prev);
+
+          // trail linger duration; CSS handles the fade-out
+          const t = setTimeout(() => {
+            cell.classList.remove('active');
+            timeouts.delete(cell);
+          }, 260);
+
+          timeouts.set(cell, t);
+        }
+
+        function buildGrid() {
+          const w = window.innerWidth;
+          const h = window.innerHeight;
+
+          // Choose a column count based on a target tile size, then derive an exact tile size
+          // that fills the screen. Use the same tile for both axes to keep squares.
+          cols = Math.max(1, Math.round(w / TARGET_TILE));
+          tile = Math.ceil(w / cols);
+          rows = Math.max(1, Math.ceil(h / tile));
+
+          gridEl.style.setProperty('--tile', `${tile}px`);
+          gridEl.style.gridTemplateColumns = `repeat(${cols}, var(--tile))`;
+          gridEl.style.gridTemplateRows = `repeat(${rows}, var(--tile))`;
+
+          const needed = cols * rows;
+          const current = gridEl.childElementCount;
+
+          for (let i = current; i < needed; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'bg-cell';
+            const pick = GIF_URLS[Math.floor(Math.random() * GIF_URLS.length)];
+            cell.style.backgroundImage = `url("${pick}")`;
+            gridEl.appendChild(cell);
+          }
+
+          for (let i = current - 1; i >= needed; i--) {
+            gridEl.removeChild(gridEl.lastElementChild);
+          }
+        }
+
+        function handlePointerMove(e) {
+          const x = e.clientX;
+          const y = e.clientY;
+          const c = Math.floor(x / tile);
+          const r = Math.floor(y / tile);
+          if (c < 0 || r < 0 || c >= cols || r >= rows) return;
+
+          const idx = r * cols + c;
+          activateCell(gridEl.children[idx]);
+        }
+
+        let raf = 0;
+        function onResize() {
+          cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(buildGrid);
+        }
+
+        window.addEventListener('resize', onResize);
+        gridEl.addEventListener('pointermove', handlePointerMove);
+        buildGrid();
+      })();
+    </script>
+
+    <script>
+      (() => {
+        const track = document.getElementById('photo-track');
+        const prevBtn = document.getElementById('photo-prev');
+        const nextBtn = document.getElementById('photo-next');
+        const toggleBtn = document.getElementById('photo-toggle');
+        const carousel = document.getElementById('photo-carousel');
+
+        if (!track || !prevBtn || !nextBtn || !toggleBtn || !carousel) return;
+
+        const PHOTOS = [
+          '20210830_181639.jpg',
+          '20210830_181658.jpg',
+          '20210831_181351.jpg',
+          '20230407_183203.jpg',
+          '20230410_080809.jpg',
+          '20230412_062619.jpg',
+          '20230412_063900.jpg',
+          '20230412_064122.jpg',
+          '20230415_175134.jpg',
+          '20230415_180445 (2).jpg',
+          '20230422_061427.jpg',
+          '20230429_133300 (1).jpg',
+          '20230429_133312.jpg',
+          '20230503_180634.jpg',
+          '20230503_181503.jpg',
+          '20230531_185752.jpg',
+          '20230710_185144.jpg',
+          '20230726_183658.jpg',
+          '20230726_184921.jpg',
+          '20230731_182720.jpg',
+          '20240929_052813.jpg',
+          '20241027_180427.jpg',
+          '20241027_182230.jpg',
+          '20250122_200112.jpg',
+          '20251212_203956.jpg',
+        ];
+
+        function formatDateFromName(name) {
+          const m = name.match(/^(\d{4})(\d{2})(\d{2})/);
+          if (!m) return name;
+          return `${m[3]}/${m[2]}/${m[1]}`;
+        }
+
+        const slides = [];
+        const imgs = [];
+
+        function photoUrl(file) {
+          return `./Photog/${encodeURIComponent(file)}`;
+        }
+
+        function ensureLoaded(i) {
+          if (i < 0 || i >= imgs.length) return;
+          const img = imgs[i];
+          if (img.dataset.loaded === '1') return;
+          img.src = img.dataset.src;
+          img.dataset.loaded = '1';
+        }
+
+        for (const file of PHOTOS) {
+          const fig = document.createElement('figure');
+          fig.className = 'slide';
+
+          const frame = document.createElement('div');
+          frame.className = 'slide__frame';
+
+          const img = document.createElement('img');
+          img.className = 'slide__img';
+          img.loading = 'lazy';
+          img.decoding = 'async';
+          img.alt = `photo ${formatDateFromName(file)}`;
+
+          img.dataset.src = photoUrl(file);
+          img.src = '';
+
+          const cap = document.createElement('figcaption');
+          cap.className = 'slide__cap';
+          cap.textContent = formatDateFromName(file);
+
+          frame.appendChild(img);
+          fig.appendChild(frame);
+          fig.appendChild(cap);
+          track.appendChild(fig);
+          slides.push(fig);
+          imgs.push(img);
+        }
+
+        let index = 0;
+
+        function scrollToIndex(i) {
+          if (slides.length === 0) return;
+          index = Math.max(0, Math.min(i, slides.length - 1));
+          slides[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+
+        prevBtn.addEventListener('click', () => scrollToIndex(index - 1));
+        nextBtn.addEventListener('click', () => scrollToIndex(index + 1));
+
+        let photosHidden = true;
+        function setHidden(hidden) {
+          photosHidden = hidden;
+          carousel.classList.toggle('is-hidden', photosHidden);
+          toggleBtn.textContent = photosHidden ? 'show' : 'hide';
+          toggleBtn.setAttribute('aria-label', photosHidden ? 'show photos' : 'hide photos');
+
+          prevBtn.style.display = photosHidden ? 'none' : '';
+          nextBtn.style.display = photosHidden ? 'none' : '';
+
+          if (!photosHidden) {
+            // When re-opening, ensure current and lookahead images are loaded.
+            ensureLoaded(index);
+            ensureLoaded(index + 1);
+            ensureLoaded(index + 2);
+          }
+        }
+
+        toggleBtn.addEventListener('click', () => setHidden(!photosHidden));
+
+        // Progressive rendering:
+        // When slide i is visible, load slide i+2 (so photo n only loads when n-2 is being seen).
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              const i = Number(entry.target.dataset.index);
+              if (Number.isNaN(i)) continue;
+              ensureLoaded(i);
+              ensureLoaded(i + 2);
+            }
+          },
+          {
+            root: carousel,
+            threshold: 0.6,
+          },
+        );
+
+        for (let i = 0; i < slides.length; i++) {
+          slides[i].dataset.index = String(i);
+          io.observe(slides[i]);
+        }
+
+        carousel.addEventListener(
+          'scroll',
+          () => {
+            // Best-effort sync of index when user scrolls manually
+            const rect = carousel.getBoundingClientRect();
+            const mid = rect.left + rect.width / 2;
+            let best = 0;
+            let bestDist = Infinity;
+            for (let i = 0; i < slides.length; i++) {
+              const r = slides[i].getBoundingClientRect();
+              const c = r.left + r.width / 2;
+              const d = Math.abs(c - mid);
+              if (d < bestDist) {
+                bestDist = d;
+                best = i;
+              }
+            }
+            index = best;
+          },
+          { passive: true },
+        );
+
+        // Kickstart initial loads
+        ensureLoaded(0);
+        ensureLoaded(1);
+        ensureLoaded(2);
+        scrollToIndex(0);
+
+        // Default: keep photos hidden until user presses "show"
+        setHidden(true);
+      })();
+    </script>
+  </body>
+</html>
