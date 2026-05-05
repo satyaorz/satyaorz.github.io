@@ -143,8 +143,8 @@
                     <ul class="text-sm-custom list-none pl-0 space-y-3">
                         <li class="!ml-0"><span class="font-bold block mb-1">Security & Auditing:</span> Manual Code Review, Threat Modeling, Invariant Testing, Stateful Fuzzing, PoC Dev</li>
                         <li class="!ml-0"><span class="font-bold block mb-1">Tools & Frameworks:</span> Foundry (Forge, Anvil, Cast), Slither, Aderyn, Hardhat</li>
-                        <li class="!ml-0"><span class="font-bold block mb-1">Smart Contracts:</span> Solidity, Yul, Solana, Soroban, OpenZeppelin, ERCs (20/721/4626/4337)</li>
-                        <li class="!ml-0"><span class="font-bold block mb-1">DeFi Architecture:</span> AMMs (Uniswap V2/V3), Lending/Borrowing (Aave), Yield Stripping, Bridges, CCIP</li>
+                        <li class="!ml-0"><span class="font-bold block mb-1">Smart Contracts:</span> Solidity, Yul, Solana, Soroban, OpenZeppelin, EVM Standards & Core EIPs</li>
+                        <li class="!ml-0"><span class="font-bold block mb-1">DeFi Architecture:</span> AMMs (Uniswap, Curve), Lending Markets (Aave), Yield Stripping, Cross-Chain Messaging (CCIP/Bridges)</li>
                         <li class="!ml-0"><span class="font-bold block mb-1">Languages:</span> Solidity, Rust, C++, Python</li>
                     </ul>
                 </section>
@@ -194,7 +194,7 @@
                         <ul class="text-sm-custom space-y-2">
                             <li><span class="font-bold">HackenProof (Dual Defense):</span> Paid bounty for a Critical vulnerability in <a href="https://dashboard.hackenproof.com/user/programs/overlayer-sc-dualdefense-audit" target="_blank">Overlayer</a>. Developed a PoC demonstrating 'Cross-chain transfer lock via `totalBridgedOut` underflow on destination credit'.</li>
                             <li><span class="font-bold">CodeHawks:</span> Rank 28 / 69 researchers in <a href="https://codehawks.cyfrin.io/c/2026-03-nft-dealers" target="_blank">NFT Dealers</a> First Flight contest.</li>
-                            <li><span class="font-bold">Multiple Platforms:</span> Submitted valid duplicate findings demonstrating consistent ability to identify complex vulnerabilities in live code.</li>
+                            <li><span class="font-bold">Multiple Platforms:</span> Submitted valid duplicate & informative findings demonstrating consistent ability to identify complex vulnerabilities in live code.</li>
                             <li>Routinely perform extensive manual/AI-aided code reviews and develop Foundry PoCs to exploit state inconsistencies and logic flaws.</li>
                             <li class="list-none !ml-[-1.2rem] mt-3 pt-3 border-t border-dashed border-[var(--border-color)]">
                                 <span class="font-bold mr-1">Profiles:</span> 
@@ -254,7 +254,7 @@
                         </ul>
                     </div>
 
-                    <div>
+                    <div class="mb-6">
                         <div class="flex flex-wrap justify-between items-baseline text-base-custom">
                             <span class="font-bold text-[var(--header-text)]">Cross-Chain Rebase Token <a href="https://github.com/satyaorz/cross-chain-rebase-token" target="_blank" class="font-normal ml-1">[GitHub]</a></span>
                             <span class="text-[var(--text-muted)] text-sm-custom font-medium">2025</span>
@@ -262,6 +262,19 @@
                         <div class="text-sm-custom italic text-[var(--text-muted)] mb-2 mt-1">Solidity, Foundry, Chainlink CCIP</div>
                         <ul class="text-sm-custom space-y-1">
                             <li>Built a multi-chain token utilizing Chainlink CCIP for programmable cross-chain transfers and secure burn-and-mint supply synchronization.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <div class="flex flex-wrap justify-between items-baseline text-base-custom">
+                            <span class="font-bold text-[var(--header-text)]">WeLot - No-Loss Prize Savings <a href="https://github.com/satyaorz/welot---lottery" target="_blank" class="font-normal ml-1">[GitHub]</a></span>
+                            <span class="text-[var(--text-muted)] text-sm-custom font-medium">2026</span>
+                        </div>
+                        <div class="text-sm-custom italic text-[var(--text-muted)] mb-2 mt-1">Solidity, Mantle, Pyth Entropy, ERC-4626</div>
+                        <ul class="text-sm-custom space-y-1">
+                            <li>Architected a no-loss savings protocol routing deposits via ERC-4626 adapters to generate yield prizes.</li>
+                            <li>Integrated Pyth Entropy for secure epoch randomness and time-weighted winner selection.</li>
+                            <li>Automated Epoch state transitions and separated principal accounting from yield prize pool logic.</li>
                         </ul>
                     </div>
                 </section>
