@@ -12,7 +12,7 @@
         }
     </script>
     <style>
-        /* Theme Variables for clear readability */
+        /* Theme Variables */
         :root {
             --bg-viewer: #525659;
             --bg-paper: #ffffff;
@@ -33,7 +33,7 @@
             --header-text: #ffffff;
         }
 
-        /* Base styles allowing natural scrolling with responsive outer padding */
+        /* Restored Natural Scrolling & Background */
         html, body {
             margin: 0;
             padding: 0;
@@ -43,31 +43,35 @@
             transition: background-color 0.3s ease;
             display: flex;
             justify-content: center;
-            padding: clamp(10px, 3vh, 32px) clamp(10px, 2vw, 16px);
+            /* Removed top/bottom padding, kept horizontal for smaller screens */
+            padding: 0 clamp(0.5rem, 2vw, 1rem);
         }
 
-        /* The 'Paper' container with responsive inner padding */
+        /* The 'Paper' container expands horizontally on large screens */
         .resume-page {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1350px; /* Increased max-width to allow 3-column expansion */
             background: var(--bg-paper);
-            padding: clamp(24px, 6vw, 40px) clamp(20px, 5vw, 50px);
+            padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 4vw, 3rem);
             box-sizing: border-box;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             color: var(--text-main);
             transition: all 0.3s ease;
-            overflow-wrap: break-word; /* Prevents long URLs from breaking mobile layout */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensures paper stretches full height even if content is small */
+            overflow-wrap: break-word;
         }
 
         html.dark .resume-page {
             box-shadow: 0 10px 25px rgba(0,0,0,0.8);
         }
 
-        /* Fluid Typography sizing for perfect readability across all devices */
-        .resume-page h1 { font-size: clamp(24px, 5vw, 30px); color: var(--header-text); }
-        .section-title { font-size: clamp(16px, 4vw, 18px); color: var(--header-text); }
-        .text-base-custom { font-size: clamp(13px, 3.5vw, 14px); }
-        .text-sm-custom { font-size: clamp(12px, 3vw, 13px); }
+        /* Highly readable, consistent typography sizes */
+        .resume-page h1 { font-size: clamp(24px, 3vw, 32px); color: var(--header-text); line-height: 1.2; margin-bottom: 8px; }
+        .section-title { font-size: 18px; color: var(--header-text); }
+        .text-base-custom { font-size: 14.5px; }
+        .text-sm-custom { font-size: 13.5px; }
         
         .section-header {
             border-bottom: 2px solid var(--border-color);
@@ -78,7 +82,6 @@
             transition: border-color 0.3s ease;
         }
 
-        /* Increased specificity to prevent Tailwind preflight from resetting lists and links */
         .resume-page ul {
             list-style-type: disc !important;
             padding-left: 1.2rem !important;
@@ -87,13 +90,13 @@
 
         .resume-page li {
             margin-bottom: 6px;
-            line-height: 1.5;
+            line-height: 1.45;
         }
 
         .resume-page a {
             color: var(--link-color) !important;
             text-decoration: none !important;
-            transition: color 0.3s ease, text-decoration 0.3s ease;
+            transition: color 0.2s ease, text-decoration 0.2s ease;
         }
         
         .resume-page a:hover {
@@ -103,52 +106,56 @@
 </head>
 <body>
 
-    <!-- Dark Mode Toggle Button (Bug Icon) - Bottom Right on Mobile, Top Right on Desktop -->
-    <button id="theme-toggle" class="fixed bottom-6 right-6 md:top-6 md:bottom-auto md:right-6 p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg text-gray-800 dark:text-green-400 hover:scale-110 transition-transform z-50 focus:outline-none" aria-label="Toggle Dark Mode">
+    <!-- Dark Mode Toggle Button (Bug Icon) -->
+    <button id="theme-toggle" class="fixed bottom-4 right-4 md:top-6 md:bottom-auto md:right-6 p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg text-gray-800 dark:text-green-400 hover:scale-110 transition-transform z-50 focus:outline-none" aria-label="Toggle Dark Mode">
         <svg id="theme-toggle-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14.5h8M8 18.5h8M8 10.5h8M12 2v2M8.5 4l.5 2h6l.5-2M5 10.5l-2-.5M5 14.5l-2-.5M5 18.5l-2-.5M19 10.5l2-.5M19 14.5l2-.5M19 18.5l2-.5M6 8a6 6 0 0 1 12 0v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8z"></path>
         </svg>
     </button>
 
     <div class="resume-page">
-        <!-- HEADER -->
-        <header class="text-center flex flex-col gap-2 pb-6 mb-6 border-b border-gray-300 dark:border-gray-600">
-            <h1 class="font-bold uppercase tracking-wide m-0">Satya Pradhan</h1>
-            <div class="flex flex-wrap justify-center gap-3 text-sm-custom">
+        <!-- HEADER (Spans full width) -->
+        <header class="text-center flex flex-col mb-6 pb-6 border-b border-gray-300 dark:border-gray-600">
+            <h1 class="font-bold uppercase tracking-wide">Satya Pradhan</h1>
+            <div class="flex flex-wrap justify-center gap-3 text-sm-custom mb-1">
                 <a href="mailto:satya0x13@gmail.com">satya0x13@gmail.com</a> | 
                 <a href="https://github.com/satyaorz" target="_blank">GitHub</a> | 
                 <a href="https://in.linkedin.com/in/satyaorz" target="_blank">LinkedIn</a> |
                 <a href="https://x.com/satyaorz" target="_blank">Twitter/X</a>
             </div>
-            <div class="font-bold text-base-custom mt-2">Smart Contract Security Researcher specializing in DeFi Protocols and EVM Architecture</div>
+            <div class="font-bold text-base-custom mt-1 mb-1">Smart Contract Security Researcher specializing in DeFi Protocols and EVM Architecture</div>
             <div class="italic text-sm-custom text-[var(--text-muted)]">Deep expertise in Code Review, Protocol-Level Threat Modeling, and Foundry.</div>
         </header>
 
-        <!-- TWO COLUMN LAYOUT -->
-        <div class="flex flex-col md:flex-row gap-8">
+        <!-- DYNAMIC GRID LAYOUT 
+             1 col on Mobile
+             2 cols on Laptops (lg)
+             3 cols on Wide Monitors (xl) using available horizontal space! 
+        -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-10 flex-grow">
             
-            <!-- LEFT COLUMN (approx 35% width) -->
-            <div class="w-full md:w-[35%] flex flex-col gap-8 md:border-r border-gray-300 dark:border-gray-600 pr-0 md:pr-6">
+            <!-- COLUMN 1: SKILLS & EDUCATION (3/12 width on extra large) -->
+            <div class="lg:col-span-4 xl:col-span-3 flex flex-col gap-6 border-b lg:border-b-0 lg:border-r border-gray-300 dark:border-gray-600 pb-8 lg:pb-0 lg:pr-8 xl:pr-6">
                 
                 <!-- SKILLS -->
                 <section>
                     <div class="section-title section-header">Technical Skills</div>
-                    <ul class="text-sm-custom list-none pl-0 space-y-4">
+                    <ul class="text-sm-custom list-none pl-0 space-y-3">
                         <li class="!ml-0"><span class="font-bold block mb-1">Security & Auditing:</span> Manual Code Review, Threat Modeling, Invariant Testing, Stateful Fuzzing, PoC Dev</li>
                         <li class="!ml-0"><span class="font-bold block mb-1">Tools & Frameworks:</span> Foundry (Forge, Anvil, Cast), Slither, Aderyn, Hardhat</li>
                         <li class="!ml-0"><span class="font-bold block mb-1">Smart Contracts:</span> Solidity, Yul, Solana, Soroban, OpenZeppelin, ERCs (20/721/4626/4337)</li>
-                        <li class="!ml-0"><span class="font-bold block mb-1">DeFi Architecture:</span> AMMs, Lending, Yield Stripping, Bridges, CCIP</li>
+                        <li class="!ml-0"><span class="font-bold block mb-1">DeFi Architecture:</span> AMMs (Uniswap V2/V3), Lending/Borrowing (Aave), Yield Stripping, Bridges, CCIP</li>
                         <li class="!ml-0"><span class="font-bold block mb-1">Languages:</span> Solidity, Rust, C++, Python</li>
                     </ul>
                 </section>
 
                 <!-- EDUCATION -->
-                <section>
+                <section class="mt-2">
                     <div class="section-title section-header">Education</div>
                     
-                    <div class="mb-5">
+                    <div class="mb-4">
                         <div class="text-base-custom font-bold leading-tight text-[var(--header-text)]">IIIT Naya Raipur</div>
-                        <div class="flex justify-between items-baseline text-sm-custom italic text-[var(--text-muted)] mb-2 mt-1">
+                        <div class="flex justify-between items-baseline text-sm-custom italic text-[var(--text-muted)] mb-1 mt-1">
                             <span>B.Tech in CSE</span>
                             <span>2027</span>
                         </div>
@@ -158,8 +165,8 @@
                     </div>
 
                     <div>
-                        <div class="text-base-custom font-bold leading-tight text-[var(--header-text)]">Cyfrin Updraft <a href="https://profiles.cyfrin.io/u/satya" target="_blank" class="text-xs font-normal ml-1">[Profile]</a></div>
-                        <div class="flex justify-between items-baseline text-sm-custom italic text-[var(--text-muted)] mb-2 mt-1">
+                        <div class="text-base-custom font-bold leading-tight text-[var(--header-text)]">Cyfrin Updraft <a href="https://profiles.cyfrin.io/u/satya" target="_blank" class="font-normal ml-1">[Profile]</a></div>
+                        <div class="flex justify-between items-baseline text-sm-custom italic text-[var(--text-muted)] mb-1 mt-1">
                             <span>Adv. Smart Contract Dev</span>
                             <span>2025</span>
                         </div>
@@ -170,10 +177,9 @@
                 </section>
             </div>
 
-            <!-- RIGHT COLUMN (approx 65% width) -->
-            <div class="w-full md:w-[65%] flex flex-col gap-8">
+            <!-- COLUMN 2: SECURITY EXPERIENCE (5/12 width on extra large) -->
+            <div class="lg:col-span-8 xl:col-span-5 flex flex-col gap-6 border-b xl:border-b-0 xl:border-r border-gray-300 dark:border-gray-600 pb-8 xl:pb-0 xl:pr-6">
                 
-                <!-- SECURITY EXPERIENCE -->
                 <section>
                     <div class="section-title section-header">Security Research & Audits</div>
                     
@@ -190,7 +196,7 @@
                             <li><span class="font-bold">CodeHawks:</span> Rank 28 / 69 researchers in <a href="https://codehawks.cyfrin.io/c/2026-03-nft-dealers" target="_blank">NFT Dealers</a> First Flight contest.</li>
                             <li><span class="font-bold">Multiple Platforms:</span> Submitted valid duplicate findings demonstrating consistent ability to identify complex vulnerabilities in live code.</li>
                             <li>Routinely perform extensive manual/AI-aided code reviews and develop Foundry PoCs to exploit state inconsistencies and logic flaws.</li>
-                            <li class="list-none !ml-[-1.2rem] mt-3 pt-2 border-t border-dashed border-[var(--border-color)]">
+                            <li class="list-none !ml-[-1.2rem] mt-3 pt-3 border-t border-dashed border-[var(--border-color)]">
                                 <span class="font-bold mr-1">Profiles:</span> 
                                 <a href="https://hackenproof.com/hackers/satyaorz" target="_blank">HackenProof</a> | 
                                 <a href="https://profiles.cyfrin.io/u/satya" target="_blank">CodeHawks</a> | 
@@ -215,14 +221,18 @@
                         </ul>
                     </div>
                 </section>
+            </div>
 
-                <!-- PROJECTS -->
+            <!-- COLUMN 3: PROJECTS (4/12 width on extra large) 
+                 Automatically moves to the right side on wide screens to utilize empty space! -->
+            <div class="lg:col-span-12 xl:col-span-4 flex flex-col gap-6">
+                
                 <section>
                     <div class="section-title section-header">Projects</div>
                     
                     <div class="mb-6">
                         <div class="flex flex-wrap justify-between items-baseline text-base-custom">
-                            <span class="font-bold text-[var(--header-text)]">Account Abstraction (ERC-4337) <a href="https://github.com/satyaorz/simple-account-abstraction" target="_blank" class="text-xs font-normal ml-1">[GitHub]</a></span>
+                            <span class="font-bold text-[var(--header-text)]">Account Abstraction (ERC-4337) <a href="https://github.com/satyaorz/simple-account-abstraction" target="_blank" class="font-normal ml-1">[GitHub]</a></span>
                             <span class="text-[var(--text-muted)] text-sm-custom font-medium">2025</span>
                         </div>
                         <div class="text-sm-custom italic text-[var(--text-muted)] mb-2 mt-1">Solidity, Foundry, ERC-4337</div>
@@ -234,7 +244,7 @@
 
                     <div class="mb-6">
                         <div class="flex flex-wrap justify-between items-baseline text-base-custom">
-                            <span class="font-bold text-[var(--header-text)]">AxoFi - Volatility Dam Protocol <a href="https://github.com/satyaorz/Axofi" target="_blank" class="text-xs font-normal ml-1">[GitHub]</a></span>
+                            <span class="font-bold text-[var(--header-text)]">AxoFi - Volatility Dam Protocol <a href="https://github.com/satyaorz/Axofi" target="_blank" class="font-normal ml-1">[GitHub]</a></span>
                             <span class="text-[var(--text-muted)] text-sm-custom font-medium">2026</span>
                         </div>
                         <div class="text-sm-custom italic text-[var(--text-muted)] mb-2 mt-1">Solidity, Mantle, EIP-4626</div>
@@ -246,7 +256,7 @@
 
                     <div>
                         <div class="flex flex-wrap justify-between items-baseline text-base-custom">
-                            <span class="font-bold text-[var(--header-text)]">Cross-Chain Rebase Token <a href="https://github.com/satyaorz/cross-chain-rebase-token" target="_blank" class="text-xs font-normal ml-1">[GitHub]</a></span>
+                            <span class="font-bold text-[var(--header-text)]">Cross-Chain Rebase Token <a href="https://github.com/satyaorz/cross-chain-rebase-token" target="_blank" class="font-normal ml-1">[GitHub]</a></span>
                             <span class="text-[var(--text-muted)] text-sm-custom font-medium">2025</span>
                         </div>
                         <div class="text-sm-custom italic text-[var(--text-muted)] mb-2 mt-1">Solidity, Foundry, Chainlink CCIP</div>
@@ -256,16 +266,17 @@
                     </div>
                 </section>
             </div>
+
         </div>
     </div>
 
-    <!-- Script for Dark Mode Logic & Sound -->
+    <!-- Script for Dark Mode Logic & Mouse Click Sound -->
     <script>
         const themeToggleBtn = document.getElementById('theme-toggle');
         const htmlElement = document.documentElement;
         let audioCtx;
 
-        function playSwitchSound() {
+        function playMouseClickSound() {
             try {
                 if (!audioCtx) {
                     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -275,31 +286,34 @@
                     audioCtx.resume();
                 }
 
-                // Create a sharp, mechanical "click" sound using Web Audio API
+                // Create a sharp, high-frequency "snap" simulating a mouse click
                 const osc = audioCtx.createOscillator();
                 const gainNode = audioCtx.createGain();
                 
-                // High frequency dropping fast creates a click
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.04);
+                // Square wave gives a sharper, more mechanical "click" tone than a sine wave
+                osc.type = 'square';
                 
-                // Volume envelope for the click
-                gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.04);
+                // Start high and drop instantly
+                osc.frequency.setValueAtTime(2500, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.015);
+                
+                // Very fast volume envelope to cut off the sound instantly
+                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.015);
                 
                 osc.connect(gainNode);
                 gainNode.connect(audioCtx.destination);
                 
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.04);
+                // The sound lasts exactly 0.015 seconds
+                osc.start(audioCtx.currentTime);
+                osc.stop(audioCtx.currentTime + 0.015);
             } catch (e) {
                 console.warn("Web Audio API not supported", e);
             }
         }
 
         themeToggleBtn.addEventListener('click', () => {
-            playSwitchSound();
+            playMouseClickSound();
             htmlElement.classList.toggle('dark');
         });
     </script>
