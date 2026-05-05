@@ -1,423 +1,317 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>satya</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satya Pradhan - Resume</title>
+    <!-- Configure Tailwind for Dark Mode -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <style>
+        /* Theme Variables for exact Quiet Light and GitHub Dark matching */
+        :root {
+            --bg-viewer: #525659;
+            --bg-paper: #fafafa; /* Quiet Light background */
+            --text-main: #333333; /* Quiet Light main text */
+            --text-muted: #6b737c; /* Quiet Light muted text */
+            --link-color: #2563eb; /* Brighter blue for clear visibility */
+            --border-color: #e1e4e8;
+            --header-text: #24292e;
+        }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Double&family=Press+Start+2P&family=VT323&display=swap"
-      rel="stylesheet"
-    />
+        html.dark {
+            --bg-viewer: #010409;
+            --bg-paper: #0d1117; /* GitHub Dark background */
+            --text-main: #c9d1d9; /* GitHub Dark main text */
+            --text-muted: #8b949e; /* GitHub Dark muted text */
+            --link-color: #58a6ff; /* GitHub Dark link blue */
+            --border-color: #30363d;
+            --header-text: #e6edf3;
+        }
 
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <div id="bg-grid" class="bg-grid" aria-hidden="true"></div>
+        /* Base styles to ensure a strict non-scrollable environment */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background-color: var(--bg-viewer);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            transition: background-color 0.3s ease;
+        }
 
-    <header class="header" role="banner">
-      <div class="header__inner">
-        <div class="header__title">satya</div>
+        /* The 'Paper' container */
+        .resume-page {
+            width: 100%;
+            max-width: 950px; /* Slightly wider for 2-column layout */
+            height: 100vh;
+            max-height: 1100px; /* Letter aspect ratio cap */
+            background: var(--bg-paper);
+            padding: 3vh 4vw;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 2vh; /* Dynamic gap based on height */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            color: var(--text-main);
+            transition: all 0.3s ease;
+        }
 
-        <div class="header__meta">
-          <span class="header__age">
-            age:
-            <span id="age" class="header__ageValue" aria-label="age counter">--</span>
-          </span>
-        </div>
+        /* Dark mode overrides for the paper */
+        html.dark .resume-page {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+        }
 
-        <div class="header__links" aria-label="links">
-          <span class="header__label">links:</span>
-          <a class="chip-link" href="https://x.com/satyaorz" target="_blank" rel="noreferrer">
-            <span class="chip-link__k">x:</span>
-            <span class="chip-link__v">satyaorz</span>
-          </a>
-          <a class="chip-link" href="https://github.com/satyaorz" target="_blank" rel="noreferrer">
-            <span class="chip-link__k">github:</span>
-            <span class="chip-link__v">satyaorz</span>
-          </a>
-        </div>
+        /* Typography sizing for dense single-page fit */
+        .resume-page h1 { font-size: clamp(20px, 3vh, 32px); color: var(--header-text); }
+        .section-title { font-size: clamp(14px, 1.8vh, 18px); color: var(--header-text); }
+        .text-base-custom { font-size: clamp(11px, 1.4vh, 14px); }
+        .text-sm-custom { font-size: clamp(10px, 1.2vh, 13px); }
+        
+        .section-header {
+            border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase;
+            font-weight: bold;
+            padding-bottom: 2px;
+            margin-bottom: 1vh;
+            transition: border-color 0.3s ease;
+        }
 
-        <div class="header__interests" aria-label="interests">
-          <span class="header__label">interests:</span>
-          <span class="tag">music</span>
-          <span class="tag">cars/hotwheels</span>
-          <span class="tag">cs/programming</span>
-          <span class="tag">photography</span>
-        </div>
+        .border-col {
+            border-right: 1px solid var(--border-color);
+        }
 
-        <div class="header__albums" aria-label="recommended album">
-          <span class="header__label">recommended album:</span>
-          <a
-            class="album-cover"
-            href="https://open.spotify.com/album/7uUltiwqvVn8Uy23Hdf1kE"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="recommended album cover"
-          >
-            <img
-              class="album-cover__img"
-              src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02dab52ffae2ea2a9e61477837"
-              alt="Disintegration (album cover)"
-              loading="lazy"
-              decoding="async"
-            />
-          </a>
-          <a
-            class="chip-link"
-            href="https://music.youtube.com/playlist?list=OLAK5uy_nbn7SLPdZCFaoCKwGTYOqEOdYQF5HIdiY&si=7BR2sC9xXYlnXCTn"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <span class="chip-link__k">ytmusic:</span>
-            <span class="chip-link__v">open</span>
-          </a>
-          <a
-            class="chip-link"
-            href="https://open.spotify.com/album/7uUltiwqvVn8Uy23Hdf1kE"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <span class="chip-link__k">spotify:</span>
-            <span class="chip-link__v">open</span>
-          </a>
-        </div>
+        /* Increased specificity to prevent Tailwind preflight from resetting lists and links */
+        .resume-page ul {
+            list-style-type: disc !important;
+            padding-left: 1.2rem !important;
+            margin: 0;
+        }
 
-        <div class="header__photos" aria-label="some photos i have taken">
-          <div class="header__photosTop">
-            <span class="header__label">gallery:</span>
-            <div class="header__photosControls">
-                <button class="chip-btn" type="button" id="photo-toggle" aria-label="hide photos">hide</button>
-              <button class="chip-btn" type="button" id="photo-prev" aria-label="previous photo">prev</button>
-              <button class="chip-btn" type="button" id="photo-next" aria-label="next photo">next</button>
+        .resume-page li {
+            margin-bottom: 0.3vh;
+            line-height: 1.35;
+        }
+
+        .resume-page a {
+            color: var(--link-color) !important;
+            text-decoration: underline !important;
+            text-underline-offset: 2px;
+            transition: color 0.3s ease, text-decoration-color 0.3s ease;
+        }
+        
+        .resume-page a:hover {
+            text-decoration-thickness: 2px !important;
+        }
+
+        .text-muted {
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dark Mode Toggle Button -->
+    <button id="theme-toggle" class="fixed top-5 right-5 p-3 rounded-full bg-white dark:bg-[#21262d] shadow-lg text-gray-800 dark:text-[#c9d1d9] hover:scale-110 border border-gray-200 dark:border-[#30363d] transition-transform z-50 focus:outline-none" aria-label="Toggle Dark Mode">
+        <!-- Bug Icon -->
+        <svg id="theme-toggle-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14.5h8M8 18.5h8M8 10.5h8M12 2v2M8.5 4l.5 2h6l.5-2M5 10.5l-2-.5M5 14.5l-2-.5M5 18.5l-2-.5M19 10.5l2-.5M19 14.5l2-.5M19 18.5l2-.5M6 8a6 6 0 0 1 12 0v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8z"></path>
+        </svg>
+    </button>
+
+    <div class="resume-page">
+        <!-- HEADER -->
+        <header class="text-center flex flex-col gap-1 pb-1">
+            <h1 class="font-bold uppercase tracking-wide">Satya Pradhan</h1>
+            <div class="flex flex-wrap justify-center gap-2 text-sm-custom">
+                <a href="mailto:satya0x13@gmail.com">satya0x13@gmail.com</a> | 
+                <a href="https://github.com/satyaorz" target="_blank">GitHub</a> | 
+                <a href="https://in.linkedin.com/in/satyaorz" target="_blank">LinkedIn</a> |
+                <a href="https://x.com/satyaorz" target="_blank">Twitter/X</a>
             </div>
-          </div>
+            <div class="font-bold text-base-custom mt-1">Smart Contract Security Researcher specializing in DeFi Protocols and EVM Architecture</div>
+            <div class="italic text-sm-custom text-muted">Deep expertise in Code Review, Protocol-Level Threat Modeling, and Foundry.</div>
+        </header>
 
-          <div class="carousel" id="photo-carousel" aria-label="photo carousel">
-            <div class="carousel__track" id="photo-track"></div>
-          </div>
+        <!-- TWO COLUMN LAYOUT -->
+        <div class="flex flex-row gap-6 h-full min-h-0">
+            
+            <!-- LEFT COLUMN (approx 35% width) -->
+            <div class="w-[35%] flex flex-col gap-3 border-col pr-4">
+                
+                <!-- SKILLS -->
+                <section>
+                    <div class="section-title section-header">Technical Skills</div>
+                    <ul class="text-sm-custom list-none pl-0 space-y-2">
+                        <li><span class="font-bold block mb-0.5">Security & Auditing:</span> Manual Code Review, Threat Modeling, Invariant Testing, Stateful Fuzzing, PoC Dev</li>
+                        <li><span class="font-bold block mb-0.5">Tools & Frameworks:</span> Foundry (Forge, Anvil, Cast), Slither, Aderyn, Hardhat</li>
+                        <li><span class="font-bold block mb-0.5">Smart Contracts:</span> Solidity, Yul, Solana, Soroban, OpenZeppelin, ERCs (20/721/4626/4337)</li>
+                        <li><span class="font-bold block mb-0.5">DeFi Architecture:</span> AMMs, Lending, Yield Stripping, Bridges, CCIP</li>
+                        <li><span class="font-bold block mb-0.5">Languages:</span> Solidity, Rust, C++, Python</li>
+                    </ul>
+                </section>
+
+                <!-- EDUCATION -->
+                <section class="mt-2">
+                    <div class="section-title section-header">Education</div>
+                    
+                    <div class="mb-3">
+                        <div class="text-base-custom font-bold leading-tight">IIIT Naya Raipur</div>
+                        <div class="flex justify-between items-baseline text-sm-custom italic text-muted mb-1">
+                            <span>B.Tech in CSE</span>
+                            <span>2027</span>
+                        </div>
+                        <ul class="text-sm-custom">
+                            <li><span class="font-bold">Relevant Coursework:</span> Cryptography, Distributed Systems, DSA, Software Engineering, OS</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <div class="text-base-custom font-bold leading-tight">Cyfrin Updraft <a href="https://profiles.cyfrin.io/u/satya" target="_blank" class="text-xs font-normal ml-1">[Profile]</a></div>
+                        <div class="flex justify-between items-baseline text-sm-custom italic text-muted mb-1">
+                            <span>Adv. Smart Contract Dev</span>
+                            <span>2025</span>
+                        </div>
+                        <ul class="text-sm-custom">
+                            <li>Blockchain Basics, Foundry Fundamentals, Advanced Foundry.</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+
+            <!-- RIGHT COLUMN (approx 65% width) -->
+            <div class="w-[65%] flex flex-col gap-3">
+                
+                <!-- SECURITY EXPERIENCE -->
+                <section>
+                    <div class="section-title section-header">Security Research & Audits</div>
+                    
+                    <div class="mb-3">
+                        <div class="flex justify-between items-baseline text-base-custom">
+                            <span class="font-bold">Independent Security Researcher</span>
+                            <span>02-2026 -- Present</span>
+                        </div>
+                        <div class="text-sm-custom italic text-muted mb-1">
+                            Bug Bounty & Audit Contests (HackenProof, Sherlock, Code4rena, Cantina, CodeHawks, Immunefi)
+                        </div>
+                        <ul class="text-sm-custom space-y-1">
+                            <li><span class="font-bold">HackenProof (Dual Defense):</span> Paid bounty for a Critical vulnerability in <a href="https://dashboard.hackenproof.com/user/programs/overlayer-sc-dualdefense-audit" target="_blank">Overlayer</a>. Developed a PoC demonstrating 'Cross-chain transfer lock via `totalBridgedOut` underflow on destination credit'.</li>
+                            <li><span class="font-bold">CodeHawks:</span> Rank 28 / 69 researchers in <a href="https://codehawks.cyfrin.io/c/2026-03-nft-dealers" target="_blank">NFT Dealers</a> First Flight contest.</li>
+                            <li><span class="font-bold">Multiple Platforms:</span> Submitted valid duplicate findings demonstrating consistent ability to identify complex vulnerabilities in live code.</li>
+                            <li>Routinely perform extensive manual/AI-aided code reviews and develop Foundry PoCs to exploit state inconsistencies and logic flaws.</li>
+                            <li><span class="font-bold">Profiles:</span> <a href="https://hackenproof.com/hackers/satyaorz" target="_blank">HackenProof</a> | <a href="https://profiles.cyfrin.io/u/satya" target="_blank">CodeHawks</a> | <a href="https://cantina.xyz/u/satyaorz" target="_blank">Cantina</a> | <a href="https://code4rena.com/@satyaorz" target="_blank">C4</a> | <a href="https://audits.sherlock.xyz/watson/satyaorz" target="_blank">Sherlock</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-baseline text-base-custom">
+                            <span class="font-bold">Smart Contract Security Training</span>
+                            <span>2025 -- Present</span>
+                        </div>
+                        <div class="text-sm-custom italic text-muted mb-1">
+                            Cyfrin Updraft & CTFs - Advanced Vulnerability Discovery
+                        </div>
+                        <ul class="text-sm-custom">
+                            <li>Completed advanced curriculum focused heavily on invariant reasoning, stateful fuzzing, and protocol-level threat modeling.</li>
+                            <li>Solve complex EVM attack vectors in Damn-Vulnerable-DeFi and Ethernaut CTFs.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- PROJECTS -->
+                <section>
+                    <div class="section-title section-header mt-1">Projects</div>
+                    
+                    <div class="mb-2.5">
+                        <div class="flex justify-between items-baseline text-base-custom">
+                            <span class="font-bold">Account Abstraction (ERC-4337) <a href="https://github.com/satyaorz/simple-account-abstraction" target="_blank" class="text-xs font-normal ml-1">[GitHub]</a></span>
+                            <span>2025</span>
+                        </div>
+                        <div class="text-sm-custom italic text-muted mb-0.5">Solidity, Foundry, ERC-4337</div>
+                        <ul class="text-sm-custom">
+                            <li>Implemented an ERC-4337 compatible smart account enabling gas abstraction.</li>
+                            <li>Engineered full UserOperation lifecycle validation, custom signature verification, and strict replay protection mechanisms.</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-2.5">
+                        <div class="flex justify-between items-baseline text-base-custom">
+                            <span class="font-bold">AxoFi - Volatility Dam Protocol <a href="https://github.com/satyaorz/Axofi" target="_blank" class="text-xs font-normal ml-1">[GitHub]</a></span>
+                            <span>2026</span>
+                        </div>
+                        <div class="text-sm-custom italic text-muted mb-0.5">Solidity, Mantle, EIP-4626</div>
+                        <ul class="text-sm-custom">
+                            <li>Engineered a yield-stripping protocol separating Principal (PT) and Yield (YT) tokens, integrating Ondo USDY.</li>
+                            <li>Designed precise yield accounting ensuring composability via EIP-4626.</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-baseline text-base-custom">
+                            <span class="font-bold">Cross-Chain Rebase Token <a href="https://github.com/satyaorz/cross-chain-rebase-token" target="_blank" class="text-xs font-normal ml-1">[GitHub]</a></span>
+                            <span>2025</span>
+                        </div>
+                        <div class="text-sm-custom italic text-muted mb-0.5">Solidity, Foundry, Chainlink CCIP</div>
+                        <ul class="text-sm-custom">
+                            <li>Built a multi-chain token utilizing Chainlink CCIP for programmable cross-chain transfers and secure burn-and-mint supply synchronization.</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
         </div>
-      </div>
-    </header>
+    </div>
 
+    <!-- Script for Dark Mode Logic & Sound -->
     <script>
-      (() => {
-        const ageEl = document.getElementById('age');
-        const BIRTH = new Date(Date.UTC(2005, 8, 22, 0, 0, 0));
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        let audioCtx;
 
-        function pad2(n) {
-          return String(n).padStart(2, '0');
-        }
+        function playSwitchSound() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
 
-        function updateAge() {
-          const now = new Date();
-          const nowUtc = new Date(
-            Date.UTC(
-              now.getUTCFullYear(),
-              now.getUTCMonth(),
-              now.getUTCDate(),
-              now.getUTCHours(),
-              now.getUTCMinutes(),
-              now.getUTCSeconds(),
-              now.getUTCMilliseconds(),
-            ),
-          );
-
-          let years = nowUtc.getUTCFullYear() - BIRTH.getUTCFullYear();
-          const hadBirthdayThisYear =
-            nowUtc.getUTCMonth() > BIRTH.getUTCMonth() ||
-            (nowUtc.getUTCMonth() === BIRTH.getUTCMonth() && nowUtc.getUTCDate() >= BIRTH.getUTCDate());
-
-          if (!hadBirthdayThisYear) years -= 1;
-
-          const lastBirthday = new Date(BIRTH);
-          lastBirthday.setUTCFullYear(BIRTH.getUTCFullYear() + years);
-
-          let diffMs = nowUtc.getTime() - lastBirthday.getTime();
-          if (diffMs < 0) diffMs = 0;
-
-          const sec = Math.floor(diffMs / 1000);
-          const days = Math.floor(sec / 86400);
-          const hours = Math.floor((sec % 86400) / 3600);
-          const minutes = Math.floor((sec % 3600) / 60);
-          const seconds = sec % 60;
-
-          ageEl.textContent = `${years}y ${days}d ${pad2(hours)}:${pad2(minutes)}:${pad2(seconds)} (utc)`;
-        }
-
-        setInterval(updateAge, 250);
-        updateAge();
-      })();
-    </script>
-
-    <script>
-      (() => {
-        const TARGET_TILE = 140;
-        const GIF_URLS = [
-          'https://media1.tenor.com/m/NzrqQHFBVz8AAAAC/kitty-transparent.gif',
-          'https://media.tenor.com/kQA86PqyXZQAAAAi/small-dancing-white-cat-dance-funny.gif',
-          'https://media.tenor.com/lehLZcrTyM0AAAAi/balls-106.gif',
-          'https://media.tenor.com/JPOhHuokpdYAAAAi/pop-cat.gif',
-          'https://media1.tenor.com/m/aSkdq3IU0g0AAAAC/laughing-cat.gif',
-          'https://media.tenor.com/SrK6CJp13hQAAAAi/gg.gif',
-          'https://media.tenor.com/e-lc0QtNZ3sAAAAi/nintendo-mario.gif',
-          'https://media.tenor.com/9d-R9Nu4m2oAAAAi/skirrrt.gif',
-          'https://media.tenor.com/9k3P0pTcAGMAAAAi/lightning-mcqueen-srb2kart.gif',
-          'https://media.tenor.com/ynS74bXp6fYAAAAi/te-amo.gif',
-          'https://media.tenor.com/FXZt_Ae_W0QAAAAi/andresbc88.gif',
-          'https://media1.tenor.com/m/4p5lLhgetLgAAAAd/cat-tongue.gif',
-          'https://media1.tenor.com/m/bnztdKRJF9QAAAAC/cat-chat-cat-fall.gif',
-        ];
-        const gridEl = document.getElementById('bg-grid');
-
-        let cols = 1;
-        let rows = 1;
-        let tile = TARGET_TILE;
-        const timeouts = new WeakMap();
-
-        function activateCell(cell) {
-          if (!cell) return;
-          cell.classList.add('active');
-
-          const prev = timeouts.get(cell);
-          if (prev) clearTimeout(prev);
-
-          // trail linger duration; CSS handles the fade-out
-          const t = setTimeout(() => {
-            cell.classList.remove('active');
-            timeouts.delete(cell);
-          }, 260);
-
-          timeouts.set(cell, t);
-        }
-
-        function buildGrid() {
-          const w = window.innerWidth;
-          const h = window.innerHeight;
-
-          // Choose a column count based on a target tile size, then derive an exact tile size
-          // that fills the screen. Use the same tile for both axes to keep squares.
-          cols = Math.max(1, Math.round(w / TARGET_TILE));
-          tile = Math.ceil(w / cols);
-          rows = Math.max(1, Math.ceil(h / tile));
-
-          gridEl.style.setProperty('--tile', `${tile}px`);
-          gridEl.style.gridTemplateColumns = `repeat(${cols}, var(--tile))`;
-          gridEl.style.gridTemplateRows = `repeat(${rows}, var(--tile))`;
-
-          const needed = cols * rows;
-          const current = gridEl.childElementCount;
-
-          for (let i = current; i < needed; i++) {
-            const cell = document.createElement('div');
-            cell.className = 'bg-cell';
-            const pick = GIF_URLS[Math.floor(Math.random() * GIF_URLS.length)];
-            cell.style.backgroundImage = `url("${pick}")`;
-            gridEl.appendChild(cell);
-          }
-
-          for (let i = current - 1; i >= needed; i--) {
-            gridEl.removeChild(gridEl.lastElementChild);
-          }
-        }
-
-        function handlePointerMove(e) {
-          const x = e.clientX;
-          const y = e.clientY;
-          const c = Math.floor(x / tile);
-          const r = Math.floor(y / tile);
-          if (c < 0 || r < 0 || c >= cols || r >= rows) return;
-
-          const idx = r * cols + c;
-          activateCell(gridEl.children[idx]);
-        }
-
-        let raf = 0;
-        function onResize() {
-          cancelAnimationFrame(raf);
-          raf = requestAnimationFrame(buildGrid);
-        }
-
-        window.addEventListener('resize', onResize);
-        gridEl.addEventListener('pointermove', handlePointerMove);
-        buildGrid();
-      })();
-    </script>
-
-    <script>
-      (() => {
-        const track = document.getElementById('photo-track');
-        const prevBtn = document.getElementById('photo-prev');
-        const nextBtn = document.getElementById('photo-next');
-        const toggleBtn = document.getElementById('photo-toggle');
-        const carousel = document.getElementById('photo-carousel');
-
-        if (!track || !prevBtn || !nextBtn || !toggleBtn || !carousel) return;
-
-        const PHOTOS = [
-          '20210830_181639.jpg',
-          '20210830_181658.jpg',
-          '20210831_181351.jpg',
-          '20230407_183203.jpg',
-          '20230410_080809.jpg',
-          '20230412_062619.jpg',
-          '20230412_063900.jpg',
-          '20230412_064122.jpg',
-          '20230415_175134.jpg',
-          '20230415_180445 (2).jpg',
-          '20230422_061427.jpg',
-          '20230429_133300 (1).jpg',
-          '20230429_133312.jpg',
-          '20230503_180634.jpg',
-          '20230503_181503.jpg',
-          '20230531_185752.jpg',
-          '20230710_185144.jpg',
-          '20230726_183658.jpg',
-          '20230726_184921.jpg',
-          '20230731_182720.jpg',
-          '20240929_052813.jpg',
-          '20241027_180427.jpg',
-          '20241027_182230.jpg',
-          '20250122_200112.jpg',
-          '20251212_203956.jpg',
-        ];
-
-        function formatDateFromName(name) {
-          const m = name.match(/^(\d{4})(\d{2})(\d{2})/);
-          if (!m) return name;
-          return `${m[3]}/${m[2]}/${m[1]}`;
-        }
-
-        const slides = [];
-        const imgs = [];
-
-        function photoUrl(file) {
-          return `./Photog/${encodeURIComponent(file)}`;
-        }
-
-        function ensureLoaded(i) {
-          if (i < 0 || i >= imgs.length) return;
-          const img = imgs[i];
-          if (img.dataset.loaded === '1') return;
-          img.src = img.dataset.src;
-          img.dataset.loaded = '1';
-        }
-
-        for (const file of PHOTOS) {
-          const fig = document.createElement('figure');
-          fig.className = 'slide';
-
-          const frame = document.createElement('div');
-          frame.className = 'slide__frame';
-
-          const img = document.createElement('img');
-          img.className = 'slide__img';
-          img.loading = 'lazy';
-          img.decoding = 'async';
-          img.alt = `photo ${formatDateFromName(file)}`;
-
-          img.dataset.src = photoUrl(file);
-          img.src = '';
-
-          const cap = document.createElement('figcaption');
-          cap.className = 'slide__cap';
-          cap.textContent = formatDateFromName(file);
-
-          frame.appendChild(img);
-          fig.appendChild(frame);
-          fig.appendChild(cap);
-          track.appendChild(fig);
-          slides.push(fig);
-          imgs.push(img);
-        }
-
-        let index = 0;
-
-        function scrollToIndex(i) {
-          if (slides.length === 0) return;
-          index = Math.max(0, Math.min(i, slides.length - 1));
-          slides[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-        }
-
-        prevBtn.addEventListener('click', () => scrollToIndex(index - 1));
-        nextBtn.addEventListener('click', () => scrollToIndex(index + 1));
-
-        let photosHidden = true;
-        function setHidden(hidden) {
-          photosHidden = hidden;
-          carousel.classList.toggle('is-hidden', photosHidden);
-          toggleBtn.textContent = photosHidden ? 'show' : 'hide';
-          toggleBtn.setAttribute('aria-label', photosHidden ? 'show photos' : 'hide photos');
-
-          prevBtn.style.display = photosHidden ? 'none' : '';
-          nextBtn.style.display = photosHidden ? 'none' : '';
-
-          if (!photosHidden) {
-            // When re-opening, ensure current and lookahead images are loaded.
-            ensureLoaded(index);
-            ensureLoaded(index + 1);
-            ensureLoaded(index + 2);
-          }
-        }
-
-        toggleBtn.addEventListener('click', () => setHidden(!photosHidden));
-
-        // Progressive rendering:
-        // When slide i is visible, load slide i+2 (so photo n only loads when n-2 is being seen).
-        const io = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (!entry.isIntersecting) continue;
-              const i = Number(entry.target.dataset.index);
-              if (Number.isNaN(i)) continue;
-              ensureLoaded(i);
-              ensureLoaded(i + 2);
+                // Create a sharp, mechanical "click" sound using Web Audio API
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                // High frequency dropping fast creates a click
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.04);
+                
+                // Volume envelope for the click
+                gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.04);
+                
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.04);
+            } catch (e) {
+                console.warn("Web Audio API not supported", e);
             }
-          },
-          {
-            root: carousel,
-            threshold: 0.6,
-          },
-        );
-
-        for (let i = 0; i < slides.length; i++) {
-          slides[i].dataset.index = String(i);
-          io.observe(slides[i]);
         }
 
-        carousel.addEventListener(
-          'scroll',
-          () => {
-            // Best-effort sync of index when user scrolls manually
-            const rect = carousel.getBoundingClientRect();
-            const mid = rect.left + rect.width / 2;
-            let best = 0;
-            let bestDist = Infinity;
-            for (let i = 0; i < slides.length; i++) {
-              const r = slides[i].getBoundingClientRect();
-              const c = r.left + r.width / 2;
-              const d = Math.abs(c - mid);
-              if (d < bestDist) {
-                bestDist = d;
-                best = i;
-              }
-            }
-            index = best;
-          },
-          { passive: true },
-        );
-
-        // Kickstart initial loads
-        ensureLoaded(0);
-        ensureLoaded(1);
-        ensureLoaded(2);
-        scrollToIndex(0);
-
-        // Default: keep photos hidden until user presses "show"
-        setHidden(true);
-      })();
+        themeToggleBtn.addEventListener('click', () => {
+            playSwitchSound();
+            htmlElement.classList.toggle('dark');
+        });
     </script>
-  </body>
+</body>
 </html>
