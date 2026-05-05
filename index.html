@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Satya Pradhan - Resume</title>
+    <title>Satya Pradhan - Security Researcher</title>
     <!-- Configure Tailwind for Dark Mode -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,81 +12,70 @@
         }
     </script>
     <style>
-        /* Theme Variables for exact Quiet Light and GitHub Dark matching */
+        /* Theme Variables for clear readability */
         :root {
             --bg-viewer: #525659;
-            --bg-paper: #fafafa; /* Quiet Light background */
-            --text-main: #333333; /* Quiet Light main text */
-            --text-muted: #6b737c; /* Quiet Light muted text */
-            --link-color: #2563eb; /* Brighter blue for clear visibility */
-            --border-color: #e1e4e8;
-            --header-text: #24292e;
+            --bg-paper: #ffffff;
+            --text-main: #111827;
+            --text-muted: #4b5563;
+            --link-color: #2563eb; 
+            --border-color: #d1d5db;
+            --header-text: #000000;
         }
 
         html.dark {
-            --bg-viewer: #010409;
-            --bg-paper: #0d1117; /* GitHub Dark background */
-            --text-main: #c9d1d9; /* GitHub Dark main text */
-            --text-muted: #8b949e; /* GitHub Dark muted text */
-            --link-color: #58a6ff; /* GitHub Dark link blue */
-            --border-color: #30363d;
-            --header-text: #e6edf3;
+            --bg-viewer: #121212;
+            --bg-paper: #1f2937;
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+            --link-color: #60a5fa;
+            --border-color: #4b5563;
+            --header-text: #ffffff;
         }
 
-        /* Base styles to ensure a strict non-scrollable environment */
+        /* Base styles allowing natural scrolling with responsive outer padding */
         html, body {
             margin: 0;
             padding: 0;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
+            min-height: 100vh;
             background-color: var(--bg-viewer);
-            display: flex;
-            justify-content: center;
-            align-items: center;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             transition: background-color 0.3s ease;
+            display: flex;
+            justify-content: center;
+            padding: clamp(10px, 3vh, 32px) clamp(10px, 2vw, 16px);
         }
 
-        /* The 'Paper' container */
+        /* The 'Paper' container with responsive inner padding */
         .resume-page {
             width: 100%;
-            max-width: 950px; /* Slightly wider for 2-column layout */
-            height: 100vh;
-            max-height: 1100px; /* Letter aspect ratio cap */
+            max-width: 1000px;
             background: var(--bg-paper);
-            padding: 3vh 4vw;
+            padding: clamp(24px, 6vw, 40px) clamp(20px, 5vw, 50px);
             box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            gap: 2vh; /* Dynamic gap based on height */
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             color: var(--text-main);
             transition: all 0.3s ease;
+            overflow-wrap: break-word; /* Prevents long URLs from breaking mobile layout */
         }
 
-        /* Dark mode overrides for the paper */
         html.dark .resume-page {
             box-shadow: 0 10px 25px rgba(0,0,0,0.8);
         }
 
-        /* Typography sizing for dense single-page fit */
-        .resume-page h1 { font-size: clamp(20px, 3vh, 32px); color: var(--header-text); }
-        .section-title { font-size: clamp(14px, 1.8vh, 18px); color: var(--header-text); }
-        .text-base-custom { font-size: clamp(11px, 1.4vh, 14px); }
-        .text-sm-custom { font-size: clamp(10px, 1.2vh, 13px); }
+        /* Fluid Typography sizing for perfect readability across all devices */
+        .resume-page h1 { font-size: clamp(24px, 5vw, 30px); color: var(--header-text); }
+        .section-title { font-size: clamp(16px, 4vw, 18px); color: var(--header-text); }
+        .text-base-custom { font-size: clamp(13px, 3.5vw, 14px); }
+        .text-sm-custom { font-size: clamp(12px, 3vw, 13px); }
         
         .section-header {
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 2px solid var(--border-color);
             text-transform: uppercase;
             font-weight: bold;
-            padding-bottom: 2px;
-            margin-bottom: 1vh;
+            padding-bottom: 4px;
+            margin-bottom: 16px;
             transition: border-color 0.3s ease;
-        }
-
-        .border-col {
-            border-right: 1px solid var(--border-color);
         }
 
         /* Increased specificity to prevent Tailwind preflight from resetting lists and links */
@@ -97,31 +86,25 @@
         }
 
         .resume-page li {
-            margin-bottom: 0.3vh;
-            line-height: 1.35;
+            margin-bottom: 6px;
+            line-height: 1.5;
         }
 
         .resume-page a {
             color: var(--link-color) !important;
-            text-decoration: underline !important;
-            text-underline-offset: 2px;
-            transition: color 0.3s ease, text-decoration-color 0.3s ease;
+            text-decoration: none !important;
+            transition: color 0.3s ease, text-decoration 0.3s ease;
         }
         
         .resume-page a:hover {
-            text-decoration-thickness: 2px !important;
-        }
-
-        .text-muted {
-            color: var(--text-muted);
+            text-decoration: underline !important;
         }
     </style>
 </head>
 <body>
 
-    <!-- Dark Mode Toggle Button -->
-    <button id="theme-toggle" class="fixed top-5 right-5 p-3 rounded-full bg-white dark:bg-[#21262d] shadow-lg text-gray-800 dark:text-[#c9d1d9] hover:scale-110 border border-gray-200 dark:border-[#30363d] transition-transform z-50 focus:outline-none" aria-label="Toggle Dark Mode">
-        <!-- Bug Icon -->
+    <!-- Dark Mode Toggle Button (Bug Icon) - Bottom Right on Mobile, Top Right on Desktop -->
+    <button id="theme-toggle" class="fixed bottom-6 right-6 md:top-6 md:bottom-auto md:right-6 p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg text-gray-800 dark:text-green-400 hover:scale-110 transition-transform z-50 focus:outline-none" aria-label="Toggle Dark Mode">
         <svg id="theme-toggle-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14.5h8M8 18.5h8M8 10.5h8M12 2v2M8.5 4l.5 2h6l.5-2M5 10.5l-2-.5M5 14.5l-2-.5M5 18.5l-2-.5M19 10.5l2-.5M19 14.5l2-.5M19 18.5l2-.5M6 8a6 6 0 0 1 12 0v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8z"></path>
         </svg>
@@ -129,43 +112,43 @@
 
     <div class="resume-page">
         <!-- HEADER -->
-        <header class="text-center flex flex-col gap-1 pb-1">
-            <h1 class="font-bold uppercase tracking-wide">Satya Pradhan</h1>
-            <div class="flex flex-wrap justify-center gap-2 text-sm-custom">
+        <header class="text-center flex flex-col gap-2 pb-6 mb-6 border-b border-gray-300 dark:border-gray-600">
+            <h1 class="font-bold uppercase tracking-wide m-0">Satya Pradhan</h1>
+            <div class="flex flex-wrap justify-center gap-3 text-sm-custom">
                 <a href="mailto:satya0x13@gmail.com">satya0x13@gmail.com</a> | 
                 <a href="https://github.com/satyaorz" target="_blank">GitHub</a> | 
                 <a href="https://in.linkedin.com/in/satyaorz" target="_blank">LinkedIn</a> |
                 <a href="https://x.com/satyaorz" target="_blank">Twitter/X</a>
             </div>
-            <div class="font-bold text-base-custom mt-1">Smart Contract Security Researcher specializing in DeFi Protocols and EVM Architecture</div>
-            <div class="italic text-sm-custom text-muted">Deep expertise in Code Review, Protocol-Level Threat Modeling, and Foundry.</div>
+            <div class="font-bold text-base-custom mt-2">Smart Contract Security Researcher specializing in DeFi Protocols and EVM Architecture</div>
+            <div class="italic text-sm-custom text-[var(--text-muted)]">Deep expertise in Code Review, Protocol-Level Threat Modeling, and Foundry.</div>
         </header>
 
         <!-- TWO COLUMN LAYOUT -->
-        <div class="flex flex-row gap-6 h-full min-h-0">
+        <div class="flex flex-col md:flex-row gap-8">
             
             <!-- LEFT COLUMN (approx 35% width) -->
-            <div class="w-[35%] flex flex-col gap-3 border-col pr-4">
+            <div class="w-full md:w-[35%] flex flex-col gap-8 md:border-r border-gray-300 dark:border-gray-600 pr-0 md:pr-6">
                 
                 <!-- SKILLS -->
                 <section>
                     <div class="section-title section-header">Technical Skills</div>
-                    <ul class="text-sm-custom list-none pl-0 space-y-2">
-                        <li><span class="font-bold block mb-0.5">Security & Auditing:</span> Manual Code Review, Threat Modeling, Invariant Testing, Stateful Fuzzing, PoC Dev</li>
-                        <li><span class="font-bold block mb-0.5">Tools & Frameworks:</span> Foundry (Forge, Anvil, Cast), Slither, Aderyn, Hardhat</li>
-                        <li><span class="font-bold block mb-0.5">Smart Contracts:</span> Solidity, Yul, Solana, Soroban, OpenZeppelin, ERCs (20/721/4626/4337)</li>
-                        <li><span class="font-bold block mb-0.5">DeFi Architecture:</span> AMMs, Lending, Yield Stripping, Bridges, CCIP</li>
-                        <li><span class="font-bold block mb-0.5">Languages:</span> Solidity, Rust, C++, Python</li>
+                    <ul class="text-sm-custom list-none pl-0 space-y-4">
+                        <li class="!ml-0"><span class="font-bold block mb-1">Security & Auditing:</span> Manual Code Review, Threat Modeling, Invariant Testing, Stateful Fuzzing, PoC Dev</li>
+                        <li class="!ml-0"><span class="font-bold block mb-1">Tools & Frameworks:</span> Foundry (Forge, Anvil, Cast), Slither, Aderyn, Hardhat</li>
+                        <li class="!ml-0"><span class="font-bold block mb-1">Smart Contracts:</span> Solidity, Yul, Solana, Soroban, OpenZeppelin, ERCs (20/721/4626/4337)</li>
+                        <li class="!ml-0"><span class="font-bold block mb-1">DeFi Architecture:</span> AMMs, Lending, Yield Stripping, Bridges, CCIP</li>
+                        <li class="!ml-0"><span class="font-bold block mb-1">Languages:</span> Solidity, Rust, C++, Python</li>
                     </ul>
                 </section>
 
                 <!-- EDUCATION -->
-                <section class="mt-2">
+                <section>
                     <div class="section-title section-header">Education</div>
                     
-                    <div class="mb-3">
-                        <div class="text-base-custom font-bold leading-tight">IIIT Naya Raipur</div>
-                        <div class="flex justify-between items-baseline text-sm-custom italic text-muted mb-1">
+                    <div class="mb-5">
+                        <div class="text-base-custom font-bold leading-tight text-[var(--header-text)]">IIIT Naya Raipur</div>
+                        <div class="flex justify-between items-baseline text-sm-custom italic text-[var(--text-muted)] mb-2 mt-1">
                             <span>B.Tech in CSE</span>
                             <span>2027</span>
                         </div>
@@ -175,8 +158,8 @@
                     </div>
 
                     <div>
-                        <div class="text-base-custom font-bold leading-tight">Cyfrin Updraft <a href="https://profiles.cyfrin.io/u/satya" target="_blank" class="text-xs font-normal ml-1">[Profile]</a></div>
-                        <div class="flex justify-between items-baseline text-sm-custom italic text-muted mb-1">
+                        <div class="text-base-custom font-bold leading-tight text-[var(--header-text)]">Cyfrin Updraft <a href="https://profiles.cyfrin.io/u/satya" target="_blank" class="text-xs font-normal ml-1">[Profile]</a></div>
+                        <div class="flex justify-between items-baseline text-sm-custom italic text-[var(--text-muted)] mb-2 mt-1">
                             <span>Adv. Smart Contract Dev</span>
                             <span>2025</span>
                         </div>
@@ -188,38 +171,45 @@
             </div>
 
             <!-- RIGHT COLUMN (approx 65% width) -->
-            <div class="w-[65%] flex flex-col gap-3">
+            <div class="w-full md:w-[65%] flex flex-col gap-8">
                 
                 <!-- SECURITY EXPERIENCE -->
                 <section>
                     <div class="section-title section-header">Security Research & Audits</div>
                     
-                    <div class="mb-3">
-                        <div class="flex justify-between items-baseline text-base-custom">
-                            <span class="font-bold">Independent Security Researcher</span>
-                            <span>02-2026 -- Present</span>
+                    <div class="mb-6">
+                        <div class="flex flex-wrap justify-between items-baseline text-base-custom">
+                            <span class="font-bold text-[var(--header-text)]">Independent Security Researcher</span>
+                            <span class="text-[var(--text-muted)] text-sm-custom font-medium">02-2026 -- Present</span>
                         </div>
-                        <div class="text-sm-custom italic text-muted mb-1">
+                        <div class="text-sm-custom italic text-[var(--text-muted)] mb-3 mt-1">
                             Bug Bounty & Audit Contests (HackenProof, Sherlock, Code4rena, Cantina, CodeHawks, Immunefi)
                         </div>
-                        <ul class="text-sm-custom space-y-1">
+                        <ul class="text-sm-custom space-y-2">
                             <li><span class="font-bold">HackenProof (Dual Defense):</span> Paid bounty for a Critical vulnerability in <a href="https://dashboard.hackenproof.com/user/programs/overlayer-sc-dualdefense-audit" target="_blank">Overlayer</a>. Developed a PoC demonstrating 'Cross-chain transfer lock via `totalBridgedOut` underflow on destination credit'.</li>
                             <li><span class="font-bold">CodeHawks:</span> Rank 28 / 69 researchers in <a href="https://codehawks.cyfrin.io/c/2026-03-nft-dealers" target="_blank">NFT Dealers</a> First Flight contest.</li>
                             <li><span class="font-bold">Multiple Platforms:</span> Submitted valid duplicate findings demonstrating consistent ability to identify complex vulnerabilities in live code.</li>
                             <li>Routinely perform extensive manual/AI-aided code reviews and develop Foundry PoCs to exploit state inconsistencies and logic flaws.</li>
-                            <li><span class="font-bold">Profiles:</span> <a href="https://hackenproof.com/hackers/satyaorz" target="_blank">HackenProof</a> | <a href="https://profiles.cyfrin.io/u/satya" target="_blank">CodeHawks</a> | <a href="https://cantina.xyz/u/satyaorz" target="_blank">Cantina</a> | <a href="https://code4rena.com/@satyaorz" target="_blank">C4</a> | <a href="https://audits.sherlock.xyz/watson/satyaorz" target="_blank">Sherlock</a></li>
+                            <li class="list-none !ml-[-1.2rem] mt-3 pt-2 border-t border-dashed border-[var(--border-color)]">
+                                <span class="font-bold mr-1">Profiles:</span> 
+                                <a href="https://hackenproof.com/hackers/satyaorz" target="_blank">HackenProof</a> | 
+                                <a href="https://profiles.cyfrin.io/u/satya" target="_blank">CodeHawks</a> | 
+                                <a href="https://cantina.xyz/u/satyaorz" target="_blank">Cantina</a> | 
+                                <a href="https://code4rena.com/@satyaorz" target="_blank">C4</a> | 
+                                <a href="https://audits.sherlock.xyz/watson/satyaorz" target="_blank">Sherlock</a>
+                            </li>
                         </ul>
                     </div>
 
                     <div>
-                        <div class="flex justify-between items-baseline text-base-custom">
-                            <span class="font-bold">Smart Contract Security Training</span>
-                            <span>2025 -- Present</span>
+                        <div class="flex flex-wrap justify-between items-baseline text-base-custom">
+                            <span class="font-bold text-[var(--header-text)]">Smart Contract Security Training</span>
+                            <span class="text-[var(--text-muted)] text-sm-custom font-medium">2025 -- Present</span>
                         </div>
-                        <div class="text-sm-custom italic text-muted mb-1">
+                        <div class="text-sm-custom italic text-[var(--text-muted)] mb-3 mt-1">
                             Cyfrin Updraft & CTFs - Advanced Vulnerability Discovery
                         </div>
-                        <ul class="text-sm-custom">
+                        <ul class="text-sm-custom space-y-2">
                             <li>Completed advanced curriculum focused heavily on invariant reasoning, stateful fuzzing, and protocol-level threat modeling.</li>
                             <li>Solve complex EVM attack vectors in Damn-Vulnerable-DeFi and Ethernaut CTFs.</li>
                         </ul>
@@ -228,39 +218,39 @@
 
                 <!-- PROJECTS -->
                 <section>
-                    <div class="section-title section-header mt-1">Projects</div>
+                    <div class="section-title section-header">Projects</div>
                     
-                    <div class="mb-2.5">
-                        <div class="flex justify-between items-baseline text-base-custom">
-                            <span class="font-bold">Account Abstraction (ERC-4337) <a href="https://github.com/satyaorz/simple-account-abstraction" target="_blank" class="text-xs font-normal ml-1">[GitHub]</a></span>
-                            <span>2025</span>
+                    <div class="mb-6">
+                        <div class="flex flex-wrap justify-between items-baseline text-base-custom">
+                            <span class="font-bold text-[var(--header-text)]">Account Abstraction (ERC-4337) <a href="https://github.com/satyaorz/simple-account-abstraction" target="_blank" class="text-xs font-normal ml-1">[GitHub]</a></span>
+                            <span class="text-[var(--text-muted)] text-sm-custom font-medium">2025</span>
                         </div>
-                        <div class="text-sm-custom italic text-muted mb-0.5">Solidity, Foundry, ERC-4337</div>
-                        <ul class="text-sm-custom">
+                        <div class="text-sm-custom italic text-[var(--text-muted)] mb-2 mt-1">Solidity, Foundry, ERC-4337</div>
+                        <ul class="text-sm-custom space-y-1">
                             <li>Implemented an ERC-4337 compatible smart account enabling gas abstraction.</li>
                             <li>Engineered full UserOperation lifecycle validation, custom signature verification, and strict replay protection mechanisms.</li>
                         </ul>
                     </div>
 
-                    <div class="mb-2.5">
-                        <div class="flex justify-between items-baseline text-base-custom">
-                            <span class="font-bold">AxoFi - Volatility Dam Protocol <a href="https://github.com/satyaorz/Axofi" target="_blank" class="text-xs font-normal ml-1">[GitHub]</a></span>
-                            <span>2026</span>
+                    <div class="mb-6">
+                        <div class="flex flex-wrap justify-between items-baseline text-base-custom">
+                            <span class="font-bold text-[var(--header-text)]">AxoFi - Volatility Dam Protocol <a href="https://github.com/satyaorz/Axofi" target="_blank" class="text-xs font-normal ml-1">[GitHub]</a></span>
+                            <span class="text-[var(--text-muted)] text-sm-custom font-medium">2026</span>
                         </div>
-                        <div class="text-sm-custom italic text-muted mb-0.5">Solidity, Mantle, EIP-4626</div>
-                        <ul class="text-sm-custom">
+                        <div class="text-sm-custom italic text-[var(--text-muted)] mb-2 mt-1">Solidity, Mantle, EIP-4626</div>
+                        <ul class="text-sm-custom space-y-1">
                             <li>Engineered a yield-stripping protocol separating Principal (PT) and Yield (YT) tokens, integrating Ondo USDY.</li>
                             <li>Designed precise yield accounting ensuring composability via EIP-4626.</li>
                         </ul>
                     </div>
 
                     <div>
-                        <div class="flex justify-between items-baseline text-base-custom">
-                            <span class="font-bold">Cross-Chain Rebase Token <a href="https://github.com/satyaorz/cross-chain-rebase-token" target="_blank" class="text-xs font-normal ml-1">[GitHub]</a></span>
-                            <span>2025</span>
+                        <div class="flex flex-wrap justify-between items-baseline text-base-custom">
+                            <span class="font-bold text-[var(--header-text)]">Cross-Chain Rebase Token <a href="https://github.com/satyaorz/cross-chain-rebase-token" target="_blank" class="text-xs font-normal ml-1">[GitHub]</a></span>
+                            <span class="text-[var(--text-muted)] text-sm-custom font-medium">2025</span>
                         </div>
-                        <div class="text-sm-custom italic text-muted mb-0.5">Solidity, Foundry, Chainlink CCIP</div>
-                        <ul class="text-sm-custom">
+                        <div class="text-sm-custom italic text-[var(--text-muted)] mb-2 mt-1">Solidity, Foundry, Chainlink CCIP</div>
+                        <ul class="text-sm-custom space-y-1">
                             <li>Built a multi-chain token utilizing Chainlink CCIP for programmable cross-chain transfers and secure burn-and-mint supply synchronization.</li>
                         </ul>
                     </div>
