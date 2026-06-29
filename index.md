@@ -8,6 +8,7 @@ description: Security research, notes, and writeups by satya.
   <img class="pfp" src="https://github.com/satyaorz.png" alt="satyaorz profile picture">
   <div>
     <h1>satyaorz</h1>
+    <p class="alias">alias: <code>0xSatya</code></p>
     <p class="muted">Blockchain security researcher focused on EVM, DeFi protocols and CS in general</p>
     <div class="link-row">
       <a class="button" href="https://x.com/satyaorz">X</a>

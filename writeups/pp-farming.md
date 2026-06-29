@@ -4,11 +4,14 @@ title: "PP Farming: Solving Both Challenges"
 description: "SEKAI-CTF 2026 blockchain writeup for PP Farming."
 ---
 
-## PP Farming : Solving PP Farming (both challenges) -- SEKAI-CTF 2026
+## PP Farming: Solving Both Challenges -- SEKAI-CTF 2026
+
+**By Satya**  
+**Date:** June 29, 2026, 19:22 IST
 
 ---
-## Introduction:
-SEKAI-CTF 2026 had two Ethereum-ctf challenges in the blockchain category.
+## Introduction
+SEKAI-CTF 2026 has two Ethereum CTF challenges in the blockchain category.
 
 <details markdown="1">
 <summary>Hi</summary>
@@ -16,13 +19,16 @@ SEKAI-CTF 2026 had two Ethereum-ctf challenges in the blockchain category.
 our team: 70776E, first CTF btw
 </details>
 
-PP Farming(PerformancePoint Farming) : It is a donate-withdraw type smart contract where a user can donate PP to someone and/or withdraw PP donated to them. The goal here for both the challenges was to drain the contract that holds all users' PP.
+### Goal
+
+PP Farming (PerformancePoint Farming) is a donate-withdraw style smart contract where a user can donate PP to someone and withdraw PP donated to them. The goal in both challenges is to drain the contract holding all users' PP.
+
 ---
 
-### [PP Farming (1)](https://ctf.sekai.team/challenges?challenge=blockchain_PP+Farming):
-The initial challenge had two main functions `donatePP(address _to)` and `withdrawPP()`. 
+### **[PP Farming (1)](https://ctf.sekai.team/challenges?challenge=blockchain_PP+Farming)**:
+The first challenge has two main functions: `donatePP(address _to)` and `withdrawPP()`.
 
-As the name suggests, the `donatePP` function allows a user to donate PP to someone.
+As the name suggests, `donatePP` allows a user to donate PP to someone.
 
 <details markdown="1">
 <summary>donatePP code</summary>
@@ -35,9 +41,9 @@ function donatePP(address _to) public payable {
 
 </details>
 
-Here `scores` is a mapping that stores the PP of each address.
+Here, `scores` is a mapping that stores the PP balance of each address.
 
-and the `withdrawPP()` function enables a user to withdraw PP donated to them.
+The `withdrawPP()` function allows a user to withdraw PP donated to them.
 
 <details markdown="1">
 <summary>withdrawPP code</summary>
@@ -54,9 +60,20 @@ function withdrawPP() public {
 
 </details>
 
-Here the main vulnerability lies in the `withdrawPP` function. This might look like a normal function at first, especially to someone unfamiliar with Solidity or Ethereum, but the order of execution matters a lot in smart contracts. The issue is that the contract sends Ether to the user using `call` before resetting the user's score to zero. In Ethereum, when a contract uses `call` to send Ether to another contract, execution is handed over to the receiving contract. If the receiver has a `receive()` or `fallback()` function, that function runs immediately and can make another call back into the original contract. Since Solidity/EVM does not automatically prevent the same function from being called again before the first call finishes, `withdrawPP()` can be reentered while `scores[msg.sender]` is still unchanged. This allows the attacker to withdraw the same PP multiple times. This is one of the most classic vulnerabilities and is known as a reentrancy vulnerability.  
+### Vulnerability
 
-exploit path:
+Here the main vulnerability lies in the **`withdrawPP`** function. This might look like a normal function at first, especially to someone unfamiliar with Solidity or Ethereum, but the order of execution matters a lot in smart contracts. The issue is that the contract sends Ether to the user using **`call`** before resetting the user's score to zero. In Ethereum, when a contract uses **`call`** to send Ether to another contract, execution is handed over to the receiving contract. If the receiver has a **`receive()`** or **`fallback()`** function, that function runs immediately and can make another call back into the original contract.[^1] Since Solidity/EVM does not automatically prevent the same function from being called again before the first call finishes, **`withdrawPP()`** can be reentered while **`scores[msg.sender]`** is still unchanged. This allows the attacker to withdraw the same PP multiple times. This is one of the most classic vulnerabilities and is known as a **reentrancy vulnerability**.[^2]
+
+### Exploit Path
+
+```txt
+Attacker.attack()
+  -> donatePP(attacker)
+  -> withdrawPP()
+      -> call(attacker)
+          -> receive()
+              -> withdrawPP() again
+```
 
 - Create an attacker contract that stores the target `PerformancePointATM` address.
 - Start the attack by calling `donatePP{value: amount}(address(this))`, so the attacker contract gets a non-zero PP score and can withdraw.
@@ -131,14 +148,19 @@ forge script exploit_env/script/Exploit.s.sol:ExploitScript --rpc-url "$RPC_URL"
 ```
 </details>
 
+### Result
+
 After this, the contract is drained and the flag can be captured.
+
 ---
+### Note
+
 Remember to save the flag captured in the first challenge because we did not and had to get it again as it is the key to the 2nd challenge attachment file T_T.
 
-### PP Farming(2)
+### **[PP Farming (2)](https://ctf.sekai.team/challenges?challenge=blockchain_PP+Farming+2)**:
 
 The second challenge looks like it fixed the first bug by adding a `noReentrancy` modifier to `withdrawPP()`.
-As `Author: brokenappendix` says `I fixed the issue. I think...`
+As the author, `brokenappendix`, says: `I fixed the issue. I think...`
 
 <details markdown="1">
 <summary>withdrawPP code</summary>
@@ -160,7 +182,11 @@ function withdrawPP() public noReentrancy {
 
 </details>
 
-So the normal Part 1 reentrancy attack no longer works because `locked` becomes `true` before the external transfer happens. But the contract introduced a new issue: it uses `delegatecall` to a helper contract.
+### Patch Attempt
+
+So the normal Part 1 reentrancy attack no longer works because `locked` becomes `true` before the external transfer happens. But the contract introduced a new issue: it uses `delegatecall` to a helper contract.[^3]
+
+The reentrancy guard fixed the original bug, but the new helper/proxy design introduced a more dangerous `delegatecall` storage collision.
 
 The helper has a `setATM(address _atm)` function:
 
@@ -218,13 +244,35 @@ fallback() external payable {
 
 </details>
 
-The important part is how `delegatecall` works. It runs the helper's code, but it writes to the ATM's storage. The helper's `atm` variable is in storage slot `1`, and the ATM's `performancePointHelper` variable is also in storage slot `1`. So when we call `setATM(address)` through the ATM fallback, it does not update the helper's `atm`; it overwrites the ATM's `performancePointHelper`.
+The important part is how `delegatecall` works. It runs the helper's code, but it writes to the ATM's storage. The helper's `atm` variable is in storage slot `1` at offset `0`, and the ATM's `performancePointHelper` variable is also in storage slot `1` at offset `0`. So when we call `setATM(address)` through the ATM fallback, it does not update the helper's `atm`; it overwrites the ATM's `performancePointHelper`.[^3]
+
+### Storage Layout
+
+| Slot | Offset | ATM variable | Helper variable |
+|---|---:|---|---|
+| 0 | 0 | `scores` | `id_number` |
+| 1 | 0 | `performancePointHelper` | `atm` |
+| 1 | 20 | `locked` | `helping` |
+
+### Root Cause
 
 This lets us replace the real helper with our own malicious helper. This is a storage collision caused by using `delegatecall` with a helper contract that does not share the same storage layout safely.
 
 Because `delegatecall` executes the malicious helper in the ATM's context, `address(this).balance` inside the helper means the ATM's balance, not the helper's balance.
 
-exploit path:
+### Exploit Path
+
+```txt
+attacker calls ATM.setATM(maliciousHelper)
+  -> ATM fallback()
+      -> delegatecall(real helper.setATM)
+          -> writes ATM slot 1
+          -> performancePointHelper = malicious helper
+  -> donate 1 wei PP
+  -> withdrawPP()
+      -> delegatecall(malicious processWithdrawal)
+          -> send full ATM balance
+```
 
 - Deploy a malicious helper contract with a fake `processWithdrawal(address,uint256)` function.
 - Call `setATM(address(maliciousHelper))` on the ATM address.
@@ -237,6 +285,10 @@ exploit path:
 - Now `withdrawPP()` delegatecalls our malicious `processWithdrawal()`.
 - Our malicious helper ignores the requested amount and sends the whole ATM balance to the recipient.
 - The ATM balance becomes zero, so `isSolved()` returns `true`.
+
+### Impact
+
+An attacker can drain the full `10 ether` challenge balance. In Part 2, the attacker only needs to donate `1 wei` so that `withdrawPP()` passes the `score > 0` check.
 
 <details markdown="1">
 <summary>our exploit script (foundry)</summary>
@@ -295,3 +347,13 @@ forge script exploit_env/script/ExploitPP2.s.sol:ExploitPP2Script --rpc-url "$RP
 ```
 
 </details>
+
+### Conclusion
+
+And that is how we solved both PP Farming challenges: the first with classic reentrancy, and the second by abusing a `delegatecall` storage collision to replace the helper and drain the contract.
+
+### References
+
+[^1]: Solidity documentation, [Receive Ether Function and Fallback Function](https://docs.soliditylang.org/en/latest/contracts.html#receive-ether-function) and [Fallback Function](https://docs.soliditylang.org/en/latest/contracts.html#fallback-function).
+[^2]: Solidity documentation, [Security Considerations: Reentrancy](https://docs.soliditylang.org/en/latest/security-considerations.html#reentrancy).
+[^3]: Solidity documentation, [Delegatecall and Libraries](https://docs.soliditylang.org/en/latest/introduction-to-smart-contracts.html#delegatecall-and-libraries).
