@@ -1,0 +1,9 @@
+title: satyaorz
+description: Security research, CTF notes, and writeups.
+url: "https://satyaorz.github.io"
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+exclude:
+  - README.md
